@@ -1,8 +1,9 @@
 package africa.semicolon.wollet.services;
 
-import africa.semicolon.wollet.WalletService;
+import africa.semicolon.wollet.service.WalletService;
 import africa.semicolon.wollet.dto.request.WalletDepositRequest;
 import africa.semicolon.wollet.dto.response.WalletDepositResponse;
+import africa.semicolon.wollet.exception.WalletNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 
+import static africa.semicolon.wollet.dto.response.TransactionStatus.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -21,17 +23,16 @@ public class WalletServiceTest {
     private WalletService walletService;
 
     @Test
-    public void testCanDepositIntoWallet() {
+    public void testCanDepositIntoWallet() throws WalletNotFoundException {
         Long walletId = 200L;
         BigDecimal depositAmount = new BigDecimal("100.00");
         WalletDepositRequest deposit = new WalletDepositRequest();
         deposit.setAmount(depositAmount);
         deposit.setWalletId(walletId);
         WalletDepositResponse response = walletService.deposit(deposit);
-        response.setStatus("SUCCESSFUL");
 
         assertNotNull(response);
         assertNotNull(response.getStatus());
-        assertEquals("SUCCESSFUL", response.getStatus());
+        assertEquals(SUCCESS.toString(), response.getStatus());
     }
 }
