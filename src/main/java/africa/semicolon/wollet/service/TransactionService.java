@@ -8,7 +8,6 @@ import africa.semicolon.wollet.models.Transaction;
 public interface TransactionService {
 
      CreateTransactionResponse createTransaction(CreateTransactionRequest transaction);
-
      Transaction getTransaction(Long transactionId) throws TransactionNotFoundException;
 }
 

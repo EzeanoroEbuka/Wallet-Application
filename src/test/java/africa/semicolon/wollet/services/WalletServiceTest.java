@@ -35,4 +35,12 @@ public class WalletServiceTest {
         assertNotNull(response.getStatus());
         assertEquals(SUCCESS.toString(), response.getStatus());
     }
+
+    @Test
+    public void testCanWithdrawIntoWallet() throws WalletNotFoundException {
+        Long walletId = 200L;
+        BigDecimal withdrawAmount = new BigDecimal("100.00");
+
+    }
+
 }

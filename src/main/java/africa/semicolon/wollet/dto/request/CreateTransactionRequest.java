@@ -14,5 +14,4 @@ public class CreateTransactionRequest {
     private BigDecimal amount;
     private TransactionStatus status;
     private String description;
-
 }
