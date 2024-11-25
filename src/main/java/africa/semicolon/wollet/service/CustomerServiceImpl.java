@@ -8,26 +8,31 @@ import africa.semicolon.wollet.exception.WalletNotFoundException;
 import africa.semicolon.wollet.models.Customer;
 import africa.semicolon.wollet.models.Wallet;
 import africa.semicolon.wollet.repositories.CustomerRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class WollectCustomerService implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     private final WalletService walletService;
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
     private final TransactionService transactionService;
 
-
+    @Transactional
     @Override
     public CustomerRegistrationResponse registerCustomer(CustomerRegistrationRequest request) throws CustomerEmailAlreadyExistException {
-        findCustomerByEmail(request);
+        validateCustomerEmailUniqueness(request);
+        CreateWalletResponse newWallet =walletService.createNewWallet(mapNewWallet());
         Customer customer = modelMapper.map(request, Customer.class);
+        customer.setWallet(newWallet.getWallet());
         customer = customerRepository.save(customer);
         var response = modelMapper.map(customer, CustomerRegistrationResponse.class);
         response.setMessage("SUCCESSFUL");
@@ -63,6 +68,20 @@ public class WollectCustomerService implements CustomerService {
         return mapDepositResponse(response, transactionResponse);
     }
 
+    private String generateAccountNumber() {
+        Random random = new Random();
+        long randomNumber = (random.nextLong(10000000,999999999));
+        return String.valueOf(randomNumber);
+
+    }
+
+    private CreateNewWallet mapNewWallet() {
+        CreateNewWallet createNewWalletRequest = new CreateNewWallet();
+        createNewWalletRequest.setBalance(new BigDecimal("0.00"));
+        createNewWalletRequest.setAccountNumber(generateAccountNumber());
+        return createNewWalletRequest;
+    }
+
     private DepositResponse mapDepositResponse(WalletDepositResponse response, CreateTransactionResponse transactionResponse) {
         var depositResponse =  modelMapper.map(response, DepositResponse.class);
         depositResponse.setTransactionId(transactionResponse.getId());
@@ -93,7 +112,7 @@ public class WollectCustomerService implements CustomerService {
         return walletDepositRequest;
     }
 
-    private void findCustomerByEmail(CustomerRegistrationRequest request) throws CustomerEmailAlreadyExistException {
+    private void validateCustomerEmailUniqueness(CustomerRegistrationRequest request) throws CustomerEmailAlreadyExistException {
         Optional<Customer> foundCustomer = customerRepository.findByEmail(request.getEmail());
         if(foundCustomer.isPresent()){
             throw new CustomerEmailAlreadyExistException("Email Already Exist");

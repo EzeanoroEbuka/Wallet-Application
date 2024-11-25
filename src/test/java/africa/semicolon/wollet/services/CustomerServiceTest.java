@@ -25,9 +25,9 @@ import java.math.BigDecimal;
 
 import static africa.semicolon.wollet.dto.response.TransactionStatus.SUCCESS;
 import static africa.semicolon.wollet.models.Gender.MALE;
-import static jakarta.persistence.CascadeType.PERSIST;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 @Sql(scripts = {"/db/data.sql"})

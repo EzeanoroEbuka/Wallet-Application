@@ -1,20 +1,24 @@
 package africa.semicolon.wollet.service;
 
+import africa.semicolon.wollet.dto.request.CreateNewWallet;
 import africa.semicolon.wollet.dto.request.WalletDepositRequest;
+import africa.semicolon.wollet.dto.response.CreateWalletResponse;
 import africa.semicolon.wollet.dto.response.WalletDepositResponse;
 import africa.semicolon.wollet.exception.WalletNotFoundException;
 import africa.semicolon.wollet.models.Wallet;
 import africa.semicolon.wollet.repositories.WalletRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import static africa.semicolon.wollet.dto.response.TransactionStatus.SUCCESS;
 
 @Service
 @AllArgsConstructor
-public class AppWalletService implements WalletService {
+public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository repository;
+    private final ModelMapper modelMapper;
 
     @Override
     public WalletDepositResponse deposit(WalletDepositRequest deposit) throws WalletNotFoundException {
@@ -28,5 +32,15 @@ public class AppWalletService implements WalletService {
        response.setStatus(SUCCESS.toString());
        response.setAmount(deposit.getAmount().toEngineeringString());
        return response;
+    }
+
+    @Override
+    public CreateWalletResponse createNewWallet(CreateNewWallet request) {
+        CreateWalletResponse response = new CreateWalletResponse();
+        Wallet wallet = modelMapper.map(request,Wallet.class);
+        wallet = repository.save(wallet);
+        response.setWallet(wallet);
+        response.setMessage("SUCCESSFUL");
+        return response;
     }
 }

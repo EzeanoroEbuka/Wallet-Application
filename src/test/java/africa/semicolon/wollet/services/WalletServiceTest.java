@@ -1,5 +1,7 @@
 package africa.semicolon.wollet.services;
 
+import africa.semicolon.wollet.dto.request.CreateNewWallet;
+import africa.semicolon.wollet.dto.response.CreateWalletResponse;
 import africa.semicolon.wollet.service.WalletService;
 import africa.semicolon.wollet.dto.request.WalletDepositRequest;
 import africa.semicolon.wollet.dto.response.WalletDepositResponse;
@@ -35,6 +37,18 @@ public class WalletServiceTest {
         assertNotNull(response.getStatus());
         assertEquals(SUCCESS.toString(), response.getStatus());
     }
+
+    @Test
+    public void testThatWalletIsCreated(){
+        CreateNewWallet request = new CreateNewWallet();
+        request.setBalance(new BigDecimal("100.00")) ;
+        request.setAccountNumber("123456789");
+        CreateWalletResponse response = walletService.createNewWallet(request);
+        assertNotNull(response);
+        assertEquals("SUCCESSFUL",response.getMessage());
+
+    }
+
 
     @Test
     public void testCanWithdrawIntoWallet() throws WalletNotFoundException {

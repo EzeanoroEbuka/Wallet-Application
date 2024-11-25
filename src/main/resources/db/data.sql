@@ -1,3 +1,11 @@
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE wallet;
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO wallet (id, balance, account_number) VALUES
+                                                     (200, 500.00, '12345'),
+                                                     (201, 200.00, '98989'),
+                                                     (202, 300.00, '32444');
 
 TRUNCATE TABLE customer;
 
