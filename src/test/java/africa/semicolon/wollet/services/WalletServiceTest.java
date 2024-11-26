@@ -50,11 +50,11 @@ public class WalletServiceTest {
     }
 
 
-    @Test
-    public void testCanWithdrawIntoWallet() throws WalletNotFoundException {
-        Long walletId = 200L;
-        BigDecimal withdrawAmount = new BigDecimal("100.00");
-
-    }
+//    @Test
+//    public void testCanWithdrawIntoWallet() throws WalletNotFoundException {
+//        Long walletId = 200L;
+//        BigDecimal withdrawAmount = new BigDecimal("100.00");
+//
+//    }
 
 }

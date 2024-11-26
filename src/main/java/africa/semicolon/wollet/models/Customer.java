@@ -3,11 +3,13 @@ package africa.semicolon.wollet.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import static jakarta.persistence.CascadeType.PERSIST;
 
 @Setter
 @Getter
+@DynamicUpdate
 @Entity
 public class Customer {
     @Id

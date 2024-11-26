@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public UpdateResponse updateCustomer(UpdateCustomerRequest request) throws USerNotFoundException {
         Customer customer = findCustomerById(request.getId());
-        modelMapper.map(request, customer);
+        conditionalCheckAndMapUpdateRequest(request, customer);
         customer = customerRepository.save(customer);
         var response = modelMapper.map(customer, UpdateResponse.class);
         response.setMessage("SUCCESSFUL");
@@ -110,6 +110,19 @@ public class CustomerServiceImpl implements CustomerService {
         walletDepositRequest.setWalletId(customerWallet.getId());
         walletDepositRequest.setAmount(request.getAmount());
         return walletDepositRequest;
+    }
+
+    private static void conditionalCheckAndMapUpdateRequest(UpdateCustomerRequest request, Customer customer) {
+        if(request.getFirstName() != null){
+            customer.setFirstName(request.getFirstName());}
+        if(request.getLastName() != null){
+            customer.setLastName(request.getLastName());}
+        if(request.getPassword() != null){
+            customer.setPassword(request.getPassword());}
+        if(request.getEmail() != null){
+            customer.setEmail(request.getEmail());}
+        if(request.getGender() != null){
+            customer.setGender(request.getGender());}
     }
 
     private void validateCustomerEmailUniqueness(CustomerRegistrationRequest request) throws CustomerEmailAlreadyExistException {

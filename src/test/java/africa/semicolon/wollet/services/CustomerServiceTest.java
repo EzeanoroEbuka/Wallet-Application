@@ -84,9 +84,8 @@ public class CustomerServiceTest {
         CustomerRegistrationResponse response = customerService.registerCustomer(request);
         assertThat(response).isNotNull();
         assertEquals("SUCCESSFUL", response.getMessage());
-        CustomerEmailAlreadyExistException exception = assertThrows(CustomerEmailAlreadyExistException.class, () ->{
-            customerService.registerCustomer(request);
-        });
+        CustomerEmailAlreadyExistException exception = assertThrows(CustomerEmailAlreadyExistException.class,
+                () -> customerService.registerCustomer(request));
         assertEquals("Email Already Exist", exception.getMessage());
     }
 

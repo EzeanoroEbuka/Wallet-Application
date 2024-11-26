@@ -2,7 +2,6 @@ package africa.semicolon.wollet.services;
 
 import africa.semicolon.wollet.dto.request.CreateTransactionRequest;
 import africa.semicolon.wollet.dto.response.CreateTransactionResponse;
-import africa.semicolon.wollet.dto.response.TransactionStatus;
 import africa.semicolon.wollet.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ public class TransactionServiceTest {
        assertEquals(SUCCESS.toString(), response.getStatus());
 
    }
-
 
    private static void setUpTransaction(CreateTransactionRequest transaction) {
       transaction.setSenderAccount("12345");
