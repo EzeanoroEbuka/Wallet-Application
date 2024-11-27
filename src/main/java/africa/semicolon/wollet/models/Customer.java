@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.Scanner;
+
 import static jakarta.persistence.CascadeType.PERSIST;
 
 @Setter
@@ -24,4 +26,5 @@ public class Customer {
     private String password;
     @OneToOne(cascade = PERSIST)
     private Wallet wallet;
+
 }
