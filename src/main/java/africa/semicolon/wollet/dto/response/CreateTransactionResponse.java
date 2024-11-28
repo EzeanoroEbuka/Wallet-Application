@@ -1,6 +1,7 @@
 package africa.semicolon.wollet.dto.response;
 
 
+import africa.semicolon.wollet.models.TransactionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,4 +16,5 @@ public class CreateTransactionResponse {
     private BigDecimal amount;
     private String status;
     private String description;
+    private String transactionType;
 }

@@ -18,6 +18,8 @@ public class Transaction {
     private Long id;
     private String recipientAccount;
     private String senderAccount;
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
